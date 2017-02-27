@@ -1,0 +1,694 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="黑白自留地" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Node.Js安装
+软件环境：CentOS 6.5 NodeJS v0.12.0
+方式一：直接下载编译好的文件 64位二进制文件下载地址
+方式二：编译源码 源码下载
+
+注意：源码编译环境需要 Python 2.6 or 2.7">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS系统下NodeJS&Express&Mysql安装与配置">
+<meta property="og:url" content="http://yoursite.com/2015/03/13/CentOS系统下NodeJS&Express&Mysql安装与配置/index.html">
+<meta property="og:site_name" content="黑白自留地">
+<meta property="og:description" content="Node.Js安装
+软件环境：CentOS 6.5 NodeJS v0.12.0
+方式一：直接下载编译好的文件 64位二进制文件下载地址
+方式二：编译源码 源码下载
+
+注意：源码编译环境需要 Python 2.6 or 2.7">
+<meta property="og:updated_time" content="2017-02-26T10:57:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CentOS系统下NodeJS&Express&Mysql安装与配置">
+<meta name="twitter:description" content="Node.Js安装
+软件环境：CentOS 6.5 NodeJS v0.12.0
+方式一：直接下载编译好的文件 64位二进制文件下载地址
+方式二：编译源码 源码下载
+
+注意：源码编译环境需要 Python 2.6 or 2.7">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/03/13/CentOS系统下NodeJS&Express&Mysql安装与配置/"/>
+
+
+
+
+
+  <title> CentOS系统下NodeJS&Express&Mysql安装与配置 | 黑白自留地 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">黑白自留地</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">永远年轻，永远挥洒热血！</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/03/13/CentOS系统下NodeJS&Express&Mysql安装与配置/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="HeiBai">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="黑白自留地">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="黑白自留地" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                CentOS系统下NodeJS&Express&Mysql安装与配置
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Дата создания записи" itemprop="dateCreated datePublished" datetime="2015-03-13T22:37:23+08:00">
+                2015-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Node-Js安装"><a href="#Node-Js安装" class="headerlink" title="Node.Js安装"></a>Node.Js安装</h2><ul>
+<li>软件环境：CentOS 6.5 NodeJS v0.12.0</li>
+<li>方式一：直接下载编译好的文件 <a href="http://nodejs.org/dist/v0.12.0/node-v0.12.0-linux-x64.tar.gz" target="_blank" rel="external">64位二进制文件下载地址</a></li>
+<li>方式二：编译源码 <a href="http://nodejs.org/dist/v0.12.0/node-v0.12.0.tar.gz" target="_blank" rel="external">源码下载</a></li>
+</ul>
+<p>注意：源码编译环境需要 Python 2.6 or 2.7</p>
+<a id="more"></a>
+<h3 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h3><ul>
+<li>解压，进入目录</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf node*</span><br><span class="line"><span class="built_in">cd</span> node*</span><br></pre></td></tr></table></figure>
+<ul>
+<li>方式一，直接移到相关目录</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mv node* /usr/<span class="built_in">local</span>/node</span><br><span class="line">//配置环境变量</span><br><span class="line">vim /etc/profile</span><br><span class="line">//在文件尾加上如下</span><br><span class="line"><span class="comment">#set nodejs env</span></span><br><span class="line"><span class="built_in">export</span> NODE_HOME=/usr/<span class="built_in">local</span>/node</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$NODE_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> NODE_PATH=<span class="variable">$NODE_HOME</span>/lib/node_modules:<span class="variable">$PATH</span></span><br><span class="line"></span><br><span class="line">//保存后，<span class="built_in">source</span>生效</span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"></span><br><span class="line">//测试</span><br><span class="line">node -v</span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+<ul>
+<li>源码编译安装</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/usr/<span class="built_in">local</span>/node</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line">//接下来就是配置环境变量了，参照方式一</span><br></pre></td></tr></table></figure>
+<h2 id="Express框架"><a href="#Express框架" class="headerlink" title="Express框架"></a>Express框架</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install express -g</span><br><span class="line">由于express <span class="number">4</span>.X 的版本已经不提供之前那样的命令行工具了，执行如下：</span><br><span class="line">sudo npm install -g express-generator</span><br></pre></td></tr></table></figure>
+<h3 id="生成express项目"><a href="#生成express项目" class="headerlink" title="生成express项目"></a>生成express项目</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">express webapp</span><br><span class="line"><span class="built_in">cd</span> webapp</span><br><span class="line">sudo npm install</span><br><span class="line">//运行</span><br><span class="line">node bin/www</span><br></pre></td></tr></table></figure>
+<h2 id="Mysql-安装"><a href="#Mysql-安装" class="headerlink" title="Mysql 安装"></a>Mysql 安装</h2><h3 id="卸载旧版本"><a href="#卸载旧版本" class="headerlink" title="卸载旧版本"></a>卸载旧版本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">yum remove mysql mysql-server mysql-libs compat-mysql51</span><br><span class="line">rm -rf /var/lib/mysql</span><br><span class="line">rm /etc/my.cnf</span><br><span class="line">//查看是否还有mysql软件：</span><br><span class="line">rpm -qa|grep mysql</span><br><span class="line">//有的话继续删除</span><br></pre></td></tr></table></figure>
+<h3 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h3><p>因为yum本身的库支持的mysql版本太旧，我们从mysql官网下载专用的yum库，下载RedHat Enterprise Linux 6 / Oracle Linux 6版：<a href="http://dev.mysql.com/downloads/repo/yum/" target="_blank" rel="external">下载链接</a></p>
+<ul>
+<li><p>下载仓库文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://dev.mysql.com/get/mysql-community-release-el6-<span class="number">5</span>.noarch.rpm</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装仓库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum localinstall mysql-community-release-el6-*.noarch.rpm</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装mysql服务端、客户端等相关软件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install mysql-community-server</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置mysql(默认密码为空)：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/mysql_secure_installation</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果发现其他机器连接mysql服务器连接不上时：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p</span><br><span class="line">use mysql</span><br><span class="line">update user <span class="built_in">set</span> host=<span class="string">'%'</span> <span class="built_in">where</span> user = <span class="string">'root'</span>; </span><br><span class="line">//ERROR <span class="number">1062</span> (<span class="number">23000</span>): Duplicate entry <span class="string">'%-root'</span> <span class="keyword">for</span> key <span class="string">'PRIMARY'</span> </span><br><span class="line">//发现如上错误提示，可忽略。</span><br><span class="line">flush privileges</span><br><span class="line">//即可连接。</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="CentOS6-5-防火墙设置"><a href="#CentOS6-5-防火墙设置" class="headerlink" title="CentOS6.5 防火墙设置"></a>CentOS6.5 防火墙设置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">查看状态：service iptables status</span><br><span class="line">停止：service iptables stop</span><br><span class="line">启动：service iptables start</span><br><span class="line">重启：service iptables restart</span><br><span class="line">永久关闭：chkconfig iptables off</span><br><span class="line">关闭后开启：chkconfig iptables on</span><br><span class="line">配置端口开放状态：</span><br><span class="line">vim /etc/sysconfig/iptables</span><br><span class="line">根据已打开的端口设置开放状态。保存，需重启防火墙。</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/01/12/CentOS6.5常用软件安装手册/" rel="prev" title="CentOS 6.5常用软件安装手册">
+                CentOS 6.5常用软件安装手册 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="HeiBai" />
+          <p class="site-author-name" itemprop="name">HeiBai</p>
+          <p class="site-description motion-element" itemprop="description">Just For Fun!</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-Js安装"><span class="nav-number">1.</span> <span class="nav-text">Node.Js安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#开始安装"><span class="nav-number">1.1.</span> <span class="nav-text">开始安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Express框架"><span class="nav-number">2.</span> <span class="nav-text">Express框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成express项目"><span class="nav-number">2.2.</span> <span class="nav-text">生成express项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mysql-安装"><span class="nav-number">3.</span> <span class="nav-text">Mysql 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#卸载旧版本"><span class="nav-number">3.1.</span> <span class="nav-text">卸载旧版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-1"><span class="nav-number">3.2.</span> <span class="nav-text">安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CentOS6-5-防火墙设置"><span class="nav-number">4.</span> <span class="nav-text">CentOS6.5 防火墙设置</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">HeiBai</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+      <!-- UY END -->
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
